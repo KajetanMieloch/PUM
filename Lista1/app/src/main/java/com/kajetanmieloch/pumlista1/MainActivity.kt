@@ -7,15 +7,32 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import android.widget.Button
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.ProgressBar
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
-    private var currentQuestionIndex = 1
+    private var currentQuestionIndex = 0
     private val totalQuestions = 10
+    private var points = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val questionCounterTextView = findViewById<TextView>(R.id.textView4)
+        val questionTextView = findViewById<TextView>(R.id.textView9)
+        val aswear1 = findViewById<RadioButton>(R.id.radioButton1)
+        val aswear2 = findViewById<RadioButton>(R.id.radioButton2)
+        val aswear3 = findViewById<RadioButton>(R.id.radioButton3)
+        val aswear4 = findViewById<RadioButton>(R.id.radioButton4)
+
         questionCounterTextView.text = currentQuestionIndex.toString() + "/10"
+        questionTextView.text = getMobbynQuestions()[0].question
+        aswear1.text = getMobbynQuestions()[0].aswears[0]
+        aswear2.text = getMobbynQuestions()[0].aswears[1]
+        aswear3.text = getMobbynQuestions()[0].aswears[2]
+        aswear4.text = getMobbynQuestions()[0].aswears[3]
 
         val nextButton = findViewById<Button>(R.id.button)
 
@@ -25,14 +42,54 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun nextQuestion(){
+    fun nextQuestion() {
         val questionCounterTextView = findViewById<TextView>(R.id.textView4)
-        if(currentQuestionIndex < totalQuestions) {
-            currentQuestionIndex += 1;
-            questionCounterTextView.text = currentQuestionIndex.toString() + "/10"
+        val questionTextView = findViewById<TextView>(R.id.textView9)
+        val aswear1 = findViewById<RadioButton>(R.id.radioButton1)
+        val aswear2 = findViewById<RadioButton>(R.id.radioButton2)
+        val aswear3 = findViewById<RadioButton>(R.id.radioButton3)
+        val aswear4 = findViewById<RadioButton>(R.id.radioButton4)
+        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+        val selectedAnswerIndex = when {
+            aswear1.isChecked -> 0
+            aswear2.isChecked -> 1
+            aswear3.isChecked -> 2
+            aswear4.isChecked -> 3
+            else -> -1 // No selection
+        }
+
+        if (selectedAnswerIndex == getMobbynQuestions()[currentQuestionIndex].correctAnswer) {
+            points += 1
+        }
+
+        if (currentQuestionIndex < totalQuestions - 1) {
+            currentQuestionIndex += 1
+
+            radioGroup.clearCheck()
+
+            questionCounterTextView.text = (currentQuestionIndex + 1).toString() + "/10"
+            questionTextView.text = getMobbynQuestions()[currentQuestionIndex].question
+            aswear1.text = getMobbynQuestions()[currentQuestionIndex].aswears[0]
+            aswear2.text = getMobbynQuestions()[currentQuestionIndex].aswears[1]
+            aswear3.text = getMobbynQuestions()[currentQuestionIndex].aswears[2]
+            aswear4.text = getMobbynQuestions()[currentQuestionIndex].aswears[3]
+        } else {
+            showFinalScore()
         }
     }
 
+    fun showFinalScore() {
+        findViewById<TextView>(R.id.textView4).visibility = View.GONE
+        findViewById<TextView>(R.id.textView3).visibility = View.GONE
+        findViewById<TextView>(R.id.textView9).visibility = View.GONE
+        findViewById<RadioGroup>(R.id.radioGroup).visibility = View.GONE
+        findViewById<Button>(R.id.button).visibility = View.GONE
+        findViewById<ProgressBar>(R.id.progressBar3).visibility = View.GONE
+
+        val finalScoreTextView = findViewById<TextView>(R.id.finalScoreTextView)
+        finalScoreTextView.text = "Twój wynik to: $points z $totalQuestions!"
+        finalScoreTextView.visibility = View.VISIBLE
+    }
     fun getMobbynQuestions(): List<Question> {
         return listOf(
             Question(
