@@ -10,4 +10,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Przejdź do logowania" />
+
+    <Button
+        android:id="@+id/button_to_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Przejdź do rejestracji"
+        android:layout_marginTop="16dp" />
 </LinearLayout>
