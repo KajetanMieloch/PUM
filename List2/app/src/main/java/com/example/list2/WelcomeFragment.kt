@@ -11,7 +11,7 @@ class WelcomeFragment : Fragment(R.layout.fragment_welcome) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val username = arguments?.getString("username") ?: "Użytkowniku"
+        val username = Globals.loggedInUsername
 
         val welcomeMessage = view.findViewById<TextView>(R.id.welcome_message)
         welcomeMessage.text = "Witaj, $username!"
