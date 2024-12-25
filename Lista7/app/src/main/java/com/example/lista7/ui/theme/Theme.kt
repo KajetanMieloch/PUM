@@ -1,5 +1,5 @@
 
-package com.example.lista6.ui.theme
+package com.example.lista7.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -17,7 +17,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun Lista6Theme(content: @Composable () -> Unit) {
+fun Lista7Theme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = LightColorScheme,
         content = content

@@ -1,7 +1,7 @@
 
-package com.example.lista6.ui.theme
+package com.example.lista7.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple = Color(0xFF6200EE)
+val Purple = Color(0xB54700EE)
 val Yellow = Color(0xFFFFEB3B)
